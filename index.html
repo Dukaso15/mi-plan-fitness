@@ -67,6 +67,17 @@
   .card li:last-child{border-bottom:none;}
   .card li span.k{color:var(--muted);font-size:12px;white-space:nowrap;}
 
+  /* Opciones intercambiables */
+  .pick{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;}
+  .opt{background:var(--card2);border-radius:12px;padding:10px 12px;margin-top:10px;}
+  .opt-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;}
+  .opt-head b{font-size:13px;color:var(--accent2);}
+  .opt-head .cal{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;}
+  .opt p{font-size:13px;line-height:1.5;color:var(--text);}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:4px;}
+  .tag.veg{background:rgba(42,157,143,.2);color:var(--green);}
+  .tag.fish{background:rgba(90,169,230,.2);color:#5aa9e6;}
+
   /* Macros */
   .macros{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
   .macro{background:var(--card2);border-radius:14px;padding:14px;text-align:center;}
@@ -122,56 +133,65 @@
     <p class="note">Tu gasto estimado es ~1.780 kcal. Comemos ~500 kcal por encima para <b>construir músculo</b>. La proteína alta (~2 g/kg) es la clave del crecimiento, y la pasta te da la energía para entrenar fuerte.</p>
 
     <h2><span class="bar"></span>Menú diario (turco)</h2>
+    <p class="note" style="margin-top:0">Cada comida tiene varias opciones <b>equivalentes en calorías y proteína</b>. Elige la que te apetezca cada día para comer variado sin salirte del plan. <span class="tag veg">veg</span> = vegetariana · <span class="tag fish">🐟</span> = pescado.</p>
 
     <div class="card">
       <span class="time">🍳 Kahvaltı · Desayuno</span>
-      <h3>Menemen + yogur</h3>
-      <ul>
-        <li>Menemen: 2 huevos + tomate y pimiento <span class="k">~230 kcal</span></li>
-        <li>Beyaz peynir (queso blanco) 40 g <span class="k">~110 kcal</span></li>
-        <li>Yogur natural (yoğurt) 150 g <span class="k">~90 kcal</span></li>
-        <li>1 rebanada pan integral + aceitunas <span class="k">~140 kcal</span></li>
-      </ul>
+      <div class="pick">Elige 1 opción · ~560 kcal</div>
+      <div class="opt"><div class="opt-head"><b>1 · Menemen</b><span class="cal">~570 kcal</span></div>
+        <p>Menemen (2 huevos con tomate y pimiento) + beyaz peynir 40 g + yogur 150 g + 1 rebanada de pan integral y aceitunas.</p></div>
+      <div class="opt"><div class="opt-head"><b>2 · Huevos con kaşar y simit</b><span class="cal">~560 kcal</span></div>
+        <p>2 huevos revueltos con queso kaşar 30 g + ½ simit + tomate, pepino y aceitunas + té.</p></div>
+      <div class="opt"><div class="opt-head"><b>3 · Yogur con avena<span class="tag veg">veg</span></b><span class="cal">~560 kcal</span></div>
+        <p>Yogur 200 g + avena (yulaf) 40 g + nueces 20 g + 1 cdta de miel + 1 plátano.</p></div>
     </div>
 
     <div class="card">
       <span class="time">🥤 Ara öğün · Media mañana</span>
-      <h3>Ayran + fruta y frutos secos</h3>
-      <ul>
-        <li>Ayran (1 vaso) <span class="k">~70 kcal</span></li>
-        <li>1 plátano <span class="k">~100 kcal</span></li>
-        <li>Nueces / avellanas 25 g (fındık) <span class="k">~160 kcal</span></li>
-      </ul>
+      <div class="pick">Elige 1 opción · ~330 kcal</div>
+      <div class="opt"><div class="opt-head"><b>1 · Ayran + fruta y nueces</b><span class="cal">~330 kcal</span></div>
+        <p>Ayran (1 vaso) + 1 plátano + nueces o avellanas 25 g (fındık).</p></div>
+      <div class="opt"><div class="opt-head"><b>2 · Yogur con miel</b><span class="cal">~330 kcal</span></div>
+        <p>Yogur 150 g + 1 cdta de miel + avellanas 25 g + 1 fruta de temporada.</p></div>
+      <div class="opt"><div class="opt-head"><b>3 · Tostada de queso</b><span class="cal">~320 kcal</span></div>
+        <p>Tostada de pan integral con queso kaşar fundido + tomate + té.</p></div>
     </div>
 
     <div class="card">
       <span class="time">🍝 Öğle · Comida</span>
-      <h3>Pasta con pollo y queso (makarna)</h3>
-      <ul>
-        <li>Pasta 90 g en seco (integral mejor) <span class="k">~320 kcal</span></li>
-        <li>Pechuga de pollo a la plancha 150 g <span class="k">~250 kcal</span></li>
-        <li>Queso kaşar rallado 30 g <span class="k">~110 kcal</span></li>
-        <li>Salsa de tomate + çoban salatası <span class="k">~100 kcal</span></li>
-      </ul>
+      <div class="pick">Elige 1 opción · ~780 kcal</div>
+      <div class="opt"><div class="opt-head"><b>1 · Pasta con pollo y queso (makarna)</b><span class="cal">~780 kcal</span></div>
+        <p>Pasta 90 g en seco + pechuga de pollo 150 g + queso kaşar rallado 30 g + salsa de tomate y çoban salatası.</p></div>
+      <div class="opt"><div class="opt-head"><b>2 · Pollo con bulgur</b><span class="cal">~760 kcal</span></div>
+        <p>Pechuga de pollo 150 g + bulgur pilavı 1½ taza + çoban salatası con aceite de oliva + yogur 100 g.</p></div>
+      <div class="opt"><div class="opt-head"><b>3 · Köfte con arroz</b><span class="cal">~780 kcal</span></div>
+        <p>Köfte de ternera 150 g + arroz pilav (pirinç pilavı) 1 taza + ensalada + yogur 100 g.</p></div>
+      <div class="opt"><div class="opt-head"><b>4 · Pescado al horno<span class="tag fish">🐟</span></b><span class="cal">~750 kcal</span></div>
+        <p>Pescado al horno 180 g + patata al horno + verduras + 1 cda de aceite de oliva y ensalada.</p></div>
     </div>
 
     <div class="card">
       <span class="time">🥣 Ara öğün · Merienda</span>
-      <h3>Mercimek çorbası (sopa de lentejas)</h3>
-      <ul>
-        <li>Sopa de lentejas rojas 1 bol <span class="k">~200 kcal</span></li>
-        <li>Tostada de pan integral con queso kaşar fundido 25 g <span class="k">~160 kcal</span></li>
-      </ul>
+      <div class="pick">Elige 1 opción · ~360 kcal</div>
+      <div class="opt"><div class="opt-head"><b>1 · Mercimek çorbası + queso</b><span class="cal">~360 kcal</span></div>
+        <p>Sopa de lentejas rojas 1 bol + tostada de pan integral con queso kaşar fundido 25 g.</p></div>
+      <div class="opt"><div class="opt-head"><b>2 · Sándwich de pollo y queso</b><span class="cal">~360 kcal</span></div>
+        <p>Pan integral + pollo o pavo 60 g + queso kaşar + tomate y lechuga.</p></div>
+      <div class="opt"><div class="opt-head"><b>3 · Yogur con fruta<span class="tag veg">veg</span></b><span class="cal">~350 kcal</span></div>
+        <p>Yogur 200 g + granola o avena 30 g + nueces 20 g + fruta troceada.</p></div>
     </div>
 
     <div class="card">
       <span class="time">🍽️ Akşam · Cena</span>
-      <h3>Köfte de ternera o pescado</h3>
-      <ul>
-        <li>Köfte de ternera 150 g <b>o</b> pescado al horno <span class="k">~280 kcal</span></li>
-        <li>Kuru fasulye o nohut (alubias/garbanzos) 1 taza <span class="k">~200 kcal</span></li>
-        <li>Verduras salteadas + yogur <span class="k">~120 kcal</span></li>
-      </ul>
+      <div class="pick">Elige 1 opción · ~600 kcal</div>
+      <div class="opt"><div class="opt-head"><b>1 · Köfte con alubias</b><span class="cal">~600 kcal</span></div>
+        <p>Köfte de ternera 150 g + kuru fasulye (alubias blancas) 1 taza + verduras salteadas + yogur.</p></div>
+      <div class="opt"><div class="opt-head"><b>2 · Pescado con garbanzos<span class="tag fish">🐟</span></b><span class="cal">~580 kcal</span></div>
+        <p>Pescado al horno 180 g + nohut (garbanzos) 1 taza + çoban salatası con aceite de oliva.</p></div>
+      <div class="opt"><div class="opt-head"><b>3 · Pollo al horno</b><span class="cal">~600 kcal</span></div>
+        <p>Pollo al horno 160 g + bulgur pilavı 1 taza + verduras al horno + yogur.</p></div>
+      <div class="opt"><div class="opt-head"><b>4 · Menemen y legumbres<span class="tag veg">veg</span></b><span class="cal">~600 kcal</span></div>
+        <p>Menemen (3 huevos) con queso + kuru fasulye 1 taza + pan integral 1 rebanada.</p></div>
     </div>
 
     <p class="note">
