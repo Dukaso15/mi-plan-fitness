@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Plan · Masa Muscular</title>
+<style>
+  :root{
+    --bg:#0f1420;
+    --card:#1a2233;
+    --card2:#212b40;
+    --accent:#e63946;      /* rojo turco */
+    --accent2:#f4a261;
+    --green:#2a9d8f;
+    --text:#eef2f8;
+    --muted:#9aa7bd;
+    --line:#2c3752;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.55;
+    padding-bottom:90px;
+  }
+  header{
+    background:linear-gradient(135deg,var(--accent),#b02a37);
+    padding:28px 20px 22px;text-align:center;
+    border-radius:0 0 26px 26px;box-shadow:0 6px 20px rgba(0,0,0,.35);
+  }
+  header .star{font-size:26px;}
+  header h1{font-size:22px;margin:4px 0 2px;letter-spacing:.3px;}
+  header p{font-size:13px;opacity:.92;}
+  .wrap{max-width:640px;margin:0 auto;padding:18px 16px;}
+
+  /* Resumen chips */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+  .chip{background:rgba(255,255,255,.15);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;}
+
+  /* Tabs */
+  .tabs{
+    position:fixed;bottom:0;left:0;right:0;z-index:50;
+    display:flex;background:var(--card);border-top:1px solid var(--line);
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  }
+  .tab{
+    flex:1;text-align:center;padding:8px 4px;border:none;background:none;
+    color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;border-radius:12px;
+    display:flex;flex-direction:column;gap:3px;align-items:center;transition:.15s;
+  }
+  .tab .ic{font-size:20px;}
+  .tab.active{color:var(--text);background:var(--card2);}
+
+  section{display:none;animation:fade .25s ease;}
+  section.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  h2{font-size:18px;margin:22px 0 12px;display:flex;align-items:center;gap:8px;}
+  h2 .bar{width:4px;height:20px;background:var(--accent2);border-radius:3px;}
+
+  .card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:14px;
+    border:1px solid var(--line);}
+  .card h3{font-size:15px;color:var(--accent2);margin-bottom:4px;}
+  .card .time{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+  .card ul{list-style:none;margin-top:8px;}
+  .card li{padding:6px 0;border-bottom:1px dashed var(--line);font-size:14px;display:flex;justify-content:space-between;gap:10px;}
+  .card li:last-child{border-bottom:none;}
+  .card li span.k{color:var(--muted);font-size:12px;white-space:nowrap;}
+
+  /* Macros */
+  .macros{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .macro{background:var(--card2);border-radius:14px;padding:14px;text-align:center;}
+  .macro .num{font-size:24px;font-weight:800;}
+  .macro .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+  .macro.kcal .num{color:var(--accent2);}
+  .macro.prot .num{color:var(--green);}
+  .macro.carb .num{color:#5aa9e6;}
+  .macro.fat .num{color:#e9c46a;}
+
+  /* Workout */
+  .day-pill{display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:700;
+    padding:4px 12px;border-radius:20px;margin-bottom:2px;}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px;}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);}
+  th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  td.ex{font-weight:600;}
+  td.sets{color:var(--accent2);white-space:nowrap;font-weight:700;text-align:right;}
+
+  .tip{background:var(--card);border-left:4px solid var(--green);border-radius:10px;
+    padding:12px 14px;margin-bottom:10px;font-size:14px;}
+  .tip b{color:var(--green);}
+
+  .note{font-size:12px;color:var(--muted);margin-top:10px;text-align:center;line-height:1.5;}
+  .badge{display:inline-block;background:var(--card2);border-radius:8px;padding:2px 8px;font-size:11px;color:var(--muted);margin:2px 2px 0 0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="star">🌙⭐</div>
+  <h1>Mi Plan de Masa Muscular</h1>
+  <p>Mujer · 29 años · 156 cm · 48 kg · Principiante</p>
+  <div class="chips">
+    <div class="chip">🎯 +Músculo</div>
+    <div class="chip">🇹🇷 Cocina turca</div>
+    <div class="chip">🚫🐷 Sin cerdo</div>
+    <div class="chip">💪 3 días/sem</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ================= DIETA ================= -->
+  <section id="dieta" class="active">
+    <h2><span class="bar"></span>Tus objetivos diarios</h2>
+    <div class="macros">
+      <div class="macro kcal"><div class="num">2.150</div><div class="lbl">kcal / día</div></div>
+      <div class="macro prot"><div class="num">100 g</div><div class="lbl">Proteína</div></div>
+      <div class="macro carb"><div class="num">260 g</div><div class="lbl">Carbohidratos</div></div>
+      <div class="macro fat"><div class="num">70 g</div><div class="lbl">Grasas</div></div>
+    </div>
+    <p class="note">Tu gasto estimado es ~1.780 kcal. Comemos ~370 kcal por encima para <b>construir músculo</b> sin ganar grasa de golpe. La proteína alta (~2 g/kg) es la clave del crecimiento.</p>
+
+    <h2><span class="bar"></span>Menú diario (turco)</h2>
+
+    <div class="card">
+      <span class="time">🍳 Kahvaltı · Desayuno</span>
+      <h3>Menemen + yogur</h3>
+      <ul>
+        <li>Menemen: 2 huevos + tomate y pimiento <span class="k">~230 kcal</span></li>
+        <li>Beyaz peynir (queso blanco) 40 g <span class="k">~110 kcal</span></li>
+        <li>Yogur natural (yoğurt) 150 g <span class="k">~90 kcal</span></li>
+        <li>1 rebanada pan integral + aceitunas <span class="k">~140 kcal</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="time">🥤 Ara öğün · Media mañana</span>
+      <h3>Ayran + fruta y frutos secos</h3>
+      <ul>
+        <li>Ayran (1 vaso) <span class="k">~70 kcal</span></li>
+        <li>1 plátano <span class="k">~100 kcal</span></li>
+        <li>Nueces / avellanas 25 g (fındık) <span class="k">~160 kcal</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="time">🍗 Öğle · Comida</span>
+      <h3>Pollo con bulgur + ensalada</h3>
+      <ul>
+        <li>Pechuga de pollo a la plancha 150 g <span class="k">~250 kcal</span></li>
+        <li>Bulgur pilavı 1 taza <span class="k">~220 kcal</span></li>
+        <li>Çoban salatası + 1 cda aceite oliva <span class="k">~120 kcal</span></li>
+        <li>Yogur 100 g <span class="k">~60 kcal</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="time">🥣 Ara öğün · Merienda</span>
+      <h3>Mercimek çorbası (sopa de lentejas)</h3>
+      <ul>
+        <li>Sopa de lentejas rojas 1 bol <span class="k">~200 kcal</span></li>
+        <li>+ pan integral 1 rebanada <span class="k">~80 kcal</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="time">🍽️ Akşam · Cena</span>
+      <h3>Köfte de ternera o pescado</h3>
+      <ul>
+        <li>Köfte de ternera 150 g <b>o</b> pescado al horno <span class="k">~280 kcal</span></li>
+        <li>Kuru fasulye o nohut (alubias/garbanzos) 1 taza <span class="k">~200 kcal</span></li>
+        <li>Verduras salteadas + yogur <span class="k">~120 kcal</span></li>
+      </ul>
+    </div>
+
+    <p class="note">
+      <span class="badge">🥩 Ternera</span><span class="badge">🐔 Pollo</span><span class="badge">🐟 Pescado</span>
+      <span class="badge">🥚 Huevo</span><span class="badge">🫘 Legumbres</span><span class="badge">🥛 Yogur/queso</span>
+      <br>Sin cerdo. Alterna entre estas fuentes cada día para variar.
+    </p>
+  </section>
+
+  <!-- ================= ENTRENAMIENTO ================= -->
+  <section id="entreno">
+    <h2><span class="bar"></span>Rutina · 3 días / semana</h2>
+    <p class="note">Cuerpo completo, ideal para empezar. Ej: <b>Lunes · Miércoles · Viernes</b>. Descansa un día entre sesiones. Empieza con poco peso y buena técnica.</p>
+
+    <div class="card">
+      <span class="day-pill">Día A</span>
+      <h3>Cuerpo completo · Piernas + empuje</h3>
+      <table>
+        <tr><th>Ejercicio</th><th style="text-align:right">Series×Reps</th></tr>
+        <tr><td class="ex">Sentadilla con peso corporal / gomas</td><td class="sets">3×12</td></tr>
+        <tr><td class="ex">Puente de glúteo</td><td class="sets">3×15</td></tr>
+        <tr><td class="ex">Flexiones (rodillas si hace falta)</td><td class="sets">3×8</td></tr>
+        <tr><td class="ex">Press de hombro con mancuernas</td><td class="sets">3×12</td></tr>
+        <tr><td class="ex">Plancha abdominal</td><td class="sets">3×20 s</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <span class="day-pill">Día B</span>
+      <h3>Cuerpo completo · Tirón + core</h3>
+      <table>
+        <tr><th>Ejercicio</th><th style="text-align:right">Series×Reps</th></tr>
+        <tr><td class="ex">Peso muerto rumano (mancuernas)</td><td class="sets">3×12</td></tr>
+        <tr><td class="ex">Remo con mancuerna a una mano</td><td class="sets">3×12</td></tr>
+        <tr><td class="ex">Zancadas hacia atrás</td><td class="sets">3×10/pierna</td></tr>
+        <tr><td class="ex">Curl de bíceps</td><td class="sets">3×12</td></tr>
+        <tr><td class="ex">Bird-dog (core)</td><td class="sets">3×10/lado</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <span class="day-pill">Día C</span>
+      <h3>Cuerpo completo · Mixto</h3>
+      <table>
+        <tr><th>Ejercicio</th><th style="text-align:right">Series×Reps</th></tr>
+        <tr><td class="ex">Sentadilla goblet (peso al pecho)</td><td class="sets">3×12</td></tr>
+        <tr><td class="ex">Press de pecho suelo/banco</td><td class="sets">3×10</td></tr>
+        <tr><td class="ex">Elevación de talones (gemelos)</td><td class="sets">3×15</td></tr>
+        <tr><td class="ex">Aperturas de hombro con mancuernas (pájaros)</td><td class="sets">3×15</td></tr>
+        <tr><td class="ex">Plancha lateral</td><td class="sets">3×15 s/lado</td></tr>
+      </table>
+    </div>
+
+    <div class="tip"><b>Calentamiento (5 min):</b> movilidad de hombros, caderas y tus 30 min de caminata cuentan como cardio suave. No hace falta más.</div>
+    <div class="tip"><b>Progresión:</b> cuando completes todas las series con facilidad, sube un poco el peso o 1-2 reps. Esa mejora semanal = músculo nuevo.</div>
+    <div class="tip"><b>Descanso:</b> 60-90 s entre series. Duerme 7-8 h: el músculo crece descansando, no entrenando.</div>
+  </section>
+
+  <!-- ================= CONSEJOS ================= -->
+  <section id="tips">
+    <h2><span class="bar"></span>Claves para tu caso</h2>
+    <div class="tip"><b>Eres principiante:</b> ganarás músculo rápido los primeros meses ("newbie gains"). Céntrate en la técnica, no en cargar mucho peso.</div>
+    <div class="tip"><b>Proteína en cada comida:</b> reparte los ~100 g a lo largo del día (huevo, yogur, pollo, ternera, legumbres). Es lo que más impacta.</div>
+    <div class="tip"><b>Come suficiente:</b> con 48 kg y trabajo activo en cocina, tu reto será comer bastante. Si no subes peso en 3-4 semanas, añade 1 fruto seco extra o media taza más de bulgur.</div>
+    <div class="tip"><b>Hidratación:</b> el ayran y el agua te ayudan. Objetivo ~2 L al día, más si sudas en la cocina.</div>
+    <div class="tip"><b>Peso objetivo:</b> subir ~0,2-0,3 kg/semana. Ganancia lenta = músculo, no grasa. Pésate 1 vez/semana en ayunas.</div>
+    <div class="tip"><b>Constancia > perfección:</b> 3 días fijos toda la semana valen más que 5 días una semana y 0 la siguiente.</div>
+
+    <h2><span class="bar"></span>Lista de la compra</h2>
+    <div class="card">
+      <ul>
+        <li>Huevos, beyaz peynir, yogur, ayran <span class="k">proteína</span></li>
+        <li>Pollo, ternera picada, pescado <span class="k">proteína</span></li>
+        <li>Lentejas, garbanzos, alubias blancas <span class="k">legumbres</span></li>
+        <li>Bulgur, pan integral, arroz <span class="k">carbos</span></li>
+        <li>Tomate, pimiento, pepino, cebolla, perejil <span class="k">verdura</span></li>
+        <li>Nueces, avellanas, aceitunas, aceite oliva <span class="k">grasas</span></li>
+        <li>Plátano y fruta de temporada <span class="k">energía</span></li>
+      </ul>
+    </div>
+
+    <p class="note">⚠️ Plan orientativo y saludable. Si tienes alguna condición médica o dudas, consúltalo con tu médico. ¡Afiyet olsun! 🇹🇷</p>
+  </section>
+
+</div>
+
+<!-- Navegación inferior -->
+<nav class="tabs">
+  <button class="tab active" data-t="dieta"><span class="ic">🍽️</span>Dieta</button>
+  <button class="tab" data-t="entreno"><span class="ic">💪</span>Entreno</button>
+  <button class="tab" data-t="tips"><span class="ic">💡</span>Consejos</button>
+</nav>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const secs=document.querySelectorAll('section');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    secs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.t).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>
