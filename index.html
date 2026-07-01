@@ -21,7 +21,7 @@
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     background:var(--bg);color:var(--text);line-height:1.55;
-    padding-bottom:90px;
+    padding-bottom:180px;
   }
   header{
     background:linear-gradient(135deg,var(--accent),#b02a37);
@@ -77,6 +77,38 @@
   .tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:4px;}
   .tag.veg{background:rgba(42,157,143,.2);color:var(--green);}
   .tag.fish{background:rgba(90,169,230,.2);color:#5aa9e6;}
+
+  /* Opciones seleccionables */
+  .opt{cursor:pointer;border:2px solid transparent;transition:.15s;-webkit-user-select:none;user-select:none;}
+  .opt:active{transform:scale(.99);}
+  .opt.sel{border-color:var(--green);background:#22323f;}
+  .chk{display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;
+    width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);
+    font-size:11px;color:transparent;margin-right:6px;flex:none;}
+  .opt.sel .chk{background:var(--green);border-color:var(--green);color:#fff;}
+
+  /* Barra de día (fija) */
+  #daybar{position:fixed;left:0;right:0;bottom:69px;z-index:49;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:var(--card2);border-top:1px solid var(--line);
+    padding:10px 16px;box-shadow:0 -4px 14px rgba(0,0,0,.35);}
+  #daybar .d-info{font-size:13px;color:var(--muted);font-weight:600;}
+  #daybar .d-info b{font-size:20px;color:var(--accent2);}
+  #d-finish{background:var(--green);color:#fff;border:none;border-radius:12px;
+    padding:11px 16px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
+  #d-finish:active{transform:scale(.97);}
+
+  /* Registro */
+  .big-num{font-size:34px;font-weight:800;color:var(--accent2);text-align:center;}
+  .day-row{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;}
+  .day-row:last-child{border-bottom:none;}
+  .day-row .dt{color:var(--muted);font-size:13px;}
+  .day-row .kc{font-weight:700;}
+  .kc.ok{color:var(--green);} .kc.low{color:#e9c46a;} .kc.hi{color:var(--accent);}
+  .btn-clear{background:none;border:1px solid var(--line);color:var(--muted);
+    border-radius:10px;padding:8px 14px;font-size:12px;cursor:pointer;margin:6px auto 0;display:block;}
+  .empty{color:var(--muted);text-align:center;padding:20px 6px;font-size:14px;line-height:1.6;}
 
   /* Macros */
   .macros{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
@@ -276,6 +308,33 @@
     <p class="note">⚠️ Plan orientativo y saludable. Si tienes alguna condición médica o dudas, consúltalo con tu médico. ¡Afiyet olsun! 🇹🇷</p>
   </section>
 
+  <!-- ================= REGISTRO ================= -->
+  <section id="registro">
+    <h2><span class="bar"></span>Registro diario</h2>
+    <p class="note" style="margin-top:0">Marca en la pestaña <b>Dieta</b> las comidas que hagas hoy y pulsa <b>«Finalizar día»</b> para guardarlas aquí.</p>
+
+    <div class="card" style="text-align:center">
+      <div class="pick" style="text-align:center">Objetivo diario</div>
+      <div class="big-num">2.300 <span style="font-size:16px;color:var(--muted)">kcal</span></div>
+    </div>
+
+    <div class="macros">
+      <div class="macro prot"><div class="num" id="reg-avg">—</div><div class="lbl">Media / día</div></div>
+      <div class="macro kcal"><div class="num" id="reg-days">0</div><div class="lbl">Días registrados</div></div>
+    </div>
+
+    <h2><span class="bar"></span>Historial</h2>
+    <div class="card"><div id="reg-list"></div></div>
+    <button class="btn-clear" id="reg-clear">🗑️ Borrar registro</button>
+    <p class="note">Los datos se guardan solo en este navegador/móvil. En otro dispositivo el registro empieza de cero.</p>
+  </section>
+
+</div>
+
+<!-- Barra fija del día -->
+<div id="daybar">
+  <div class="d-info">Hoy: <b id="d-kcal">0</b> kcal <span id="d-count">· 0 comidas</span></div>
+  <button id="d-finish">Finalizar día ✓</button>
 </div>
 
 <!-- Navegación inferior -->
@@ -283,9 +342,13 @@
   <button class="tab active" data-t="dieta"><span class="ic">🍽️</span>Dieta</button>
   <button class="tab" data-t="entreno"><span class="ic">💪</span>Entreno</button>
   <button class="tab" data-t="tips"><span class="ic">💡</span>Consejos</button>
+  <button class="tab" data-t="registro"><span class="ic">📊</span>Registro</button>
 </nav>
 
 <script>
+  const TARGET=2300;
+
+  // ---- Navegación por pestañas ----
   const tabs=document.querySelectorAll('.tab');
   const secs=document.querySelectorAll('section');
   tabs.forEach(t=>t.addEventListener('click',()=>{
@@ -293,8 +356,80 @@
     secs.forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
     document.getElementById(t.dataset.t).classList.add('active');
+    if(t.dataset.t==='registro') renderReg();
     window.scrollTo({top:0,behavior:'smooth'});
   }));
+
+  // ---- Selección de comidas ----
+  const opts=[...document.querySelectorAll('.opt')];
+  let sel=new Set(JSON.parse(localStorage.getItem('todaySel')||'[]'));
+
+  opts.forEach((o,i)=>{
+    const cal=parseInt((o.querySelector('.cal').textContent.match(/\d+/)||[0])[0],10)||0;
+    o.dataset.cal=cal;
+    const b=o.querySelector('.opt-head b');
+    const chk=document.createElement('span');
+    chk.className='chk'; chk.textContent='✓';
+    b.prepend(chk);
+    if(sel.has(i)) o.classList.add('sel');
+    o.addEventListener('click',()=>{
+      if(sel.has(i)){sel.delete(i);o.classList.remove('sel');}
+      else{sel.add(i);o.classList.add('sel');}
+      saveSel(); updateBar();
+    });
+  });
+
+  function saveSel(){localStorage.setItem('todaySel',JSON.stringify([...sel]));}
+  function todayKcal(){let s=0;sel.forEach(i=>s+=+opts[i].dataset.cal);return s;}
+  function updateBar(){
+    document.getElementById('d-kcal').textContent=todayKcal().toLocaleString('es-ES');
+    document.getElementById('d-count').textContent='· '+sel.size+' comida'+(sel.size===1?'':'s');
+  }
+
+  // ---- Historial ----
+  function getHist(){return JSON.parse(localStorage.getItem('hist')||'[]');}
+
+  document.getElementById('d-finish').addEventListener('click',()=>{
+    if(sel.size===0){alert('Selecciona al menos una comida antes de finalizar el día.');return;}
+    const kc=todayKcal();
+    const hist=getHist();
+    const today=new Date().toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});
+    hist.unshift({date:today,kcal:kc,meals:sel.size});
+    localStorage.setItem('hist',JSON.stringify(hist));
+    sel=new Set(); saveSel();
+    opts.forEach(o=>o.classList.remove('sel'));
+    updateBar(); renderReg();
+    alert('✅ Día guardado: '+kc.toLocaleString('es-ES')+' kcal en '+hist[0].meals+' comidas. ¡Buen trabajo!');
+  });
+
+  // ---- Render del registro ----
+  function renderReg(){
+    const hist=getHist();
+    document.getElementById('reg-days').textContent=hist.length;
+    const box=document.getElementById('reg-list');
+    const avgEl=document.getElementById('reg-avg');
+    if(hist.length===0){
+      avgEl.textContent='—';
+      box.innerHTML='<div class="empty">Aún no has finalizado ningún día.<br>Marca tus comidas en «Dieta» y pulsa «Finalizar día».</div>';
+      return;
+    }
+    const avg=Math.round(hist.reduce((a,b)=>a+b.kcal,0)/hist.length);
+    avgEl.textContent=avg.toLocaleString('es-ES');
+    box.innerHTML=hist.map(h=>{
+      let cls='ok'; const diff=h.kcal-TARGET;
+      if(h.kcal<TARGET-250)cls='low'; else if(h.kcal>TARGET+250)cls='hi';
+      const sign=diff>=0?'+':'';
+      return '<div class="day-row"><span class="dt">'+h.date+' · '+h.meals+' comidas</span>'+
+             '<span class="kc '+cls+'">'+h.kcal.toLocaleString('es-ES')+' kcal '+
+             '<small style="opacity:.7;font-weight:600">('+sign+diff+')</small></span></div>';
+    }).join('');
+  }
+
+  document.getElementById('reg-clear').addEventListener('click',()=>{
+    if(confirm('¿Borrar todo el registro de días?')){localStorage.removeItem('hist');renderReg();}
+  });
+
+  updateBar(); renderReg();
 </script>
 </body>
 </html>
